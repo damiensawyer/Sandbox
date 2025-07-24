@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Sandbox.Modules.CustomerManagement.IntegrationTests": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:51763;http://localhost:51764"
+    }
+  }
+}
