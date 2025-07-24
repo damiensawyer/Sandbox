@@ -4,10 +4,10 @@ using Sandbox.AppHost.Extensions;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var authDomain = builder.AddParameter("OpenIDConnectSettingsDomain", secret: false);
-var authClientId = builder.AddParameter("OpenIDConnectSettingsClientId", secret: false);
-var authClientSecret = builder.AddParameter("OpenIDConnectSettingsClientSecret", secret: true);
-var authAudience = builder.AddParameter("OpenIDConnectSettingsAudience", secret: false);
+var authDomain = builder.AddParameter("OpenIDConnectSettingsDomain","test", secret: false);
+var authClientId = builder.AddParameter("OpenIDConnectSettingsClientId", "test", secret: false);
+var authClientSecret = builder.AddParameter("OpenIDConnectSettingsClientSecret", "test", secret: true);
+var authAudience = builder.AddParameter("OpenIDConnectSettingsAudience", "test", secret: false);
 
 var openTelemetryCollector = builder.AddOpenTelemetryCollector("../config/otel.yml");
 
@@ -18,7 +18,7 @@ var openTelemetryCollector = builder.AddOpenTelemetryCollector("../config/otel.y
 
 var postgres = builder.AddPostgres("postgres")
     .WithDataVolume()
-    .WithPgAdmin()
+    //.WithPgAdmin()
     .WithPgWeb();
 var db = postgres.AddDatabase("sandbox-db");
 
@@ -36,7 +36,7 @@ if (builder.Environment.IsDevelopment())
 }
 
 var apiService = builder.AddProject<Projects.Sandbox_ApiService>("apiservice")
-    .WithReplicas(2)
+    .WithReplicas(1)
     .WithReference(db)
     .WithEnvironment("OpenIDConnectSettings__Domain", authDomain)
     .WithEnvironment("OpenIDConnectSettings__Audience", authAudience)
